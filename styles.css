@@ -674,14 +674,14 @@ button {
   opacity: 0;
 }
 .bouquet-left {
-  width: 38%;
+  width: 48%;
   align-self: flex-end;
   transform: translateX(-40px);
   animation: fan-left 0.7s 0.1s var(--ease-spring) forwards;
   filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.25));
 }
 .bouquet-right {
-  width: 38%;
+  width: 48%;
   align-self: flex-end;
   transform: translateX(40px);
   animation: fan-right 0.7s 0.25s var(--ease-spring) forwards;
