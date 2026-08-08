@@ -2,7 +2,7 @@
 // CONFIG — edit this to personalize the site
 // ============================================================================
 const CONFIG = {
-  girlfriendName: "Sayang", // ganti dengan nama panggilan pacarmu
+  girlfriendName: "Qf", // ganti dengan nama panggilan pacarmu
   sitePassword: "qfimoed", // ganti dengan kata sandi rahasia kalian berdua (tidak case-sensitive)
 };
 
