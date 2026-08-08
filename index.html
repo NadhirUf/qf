@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover"
     />
     <title>Happy Birthday, Sayang 🤍</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -76,7 +76,7 @@
           <button type="submit" class="lock-submit">Buka</button>
         </form>
         <p id="lock-error" class="lock-error" hidden>
-          Belum tepat, coba lagi ya
+          Belum tepat, coba lagi ya 🥺
         </p>
       </div>
     </section>
@@ -90,7 +90,7 @@
     >
       <div class="cover-vignette" aria-hidden="true"></div>
 
-      <p class="eyebrow">— Hi Qf —</p>
+      <p class="eyebrow">— sebuah kejutan kecil untuk —</p>
       <h1 class="cover-title">
         <span class="title-line">Happy Birthday,</span>
         <span class="title-name" id="girlfriend-name">Sayang</span>
@@ -155,6 +155,42 @@
           <span class="gift-label">Kue untukmu</span>
         </button>
       </div>
+
+      <div class="our-photo-trigger-wrap">
+        <button
+          id="our-photo-trigger"
+          class="our-photo-trigger"
+          aria-label="Lihat foto kita"
+        >
+          <img
+            src="assets/img/our-photo-bears.png"
+            alt="Boneka beruang berpelukan"
+            class="our-photo-bears"
+          />
+          <span class="our-photo-label">our photo</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============ SCENE 3 — OUR PHOTO WALL ============ -->
+    <section
+      id="scene-photo-wall"
+      class="scene scene-photo-wall"
+      aria-label="Galeri foto kita"
+      hidden
+    >
+      <button id="photo-wall-back" class="photo-wall-back" aria-label="Kembali">
+        ✕
+      </button>
+
+      <p class="eyebrow">— sepanjang waktu bersamamu —</p>
+      <h2 class="photo-wall-title">Our Photo</h2>
+
+      <div class="marquee-stack" id="marquee-stack" aria-hidden="false">
+        <!-- rows injected by script.js -->
+      </div>
+
+      <p class="photo-wall-caption">setiap momen sama kamu, aku simpan 🤍</p>
     </section>
 
     <!-- ============ MODAL — MESSAGE ============ -->
@@ -214,6 +250,6 @@
       </div>
     </div>
 
-    <script type="module" src="script.js"></script>
+    <script type="module" src="script.js?v2"></script>
   </body>
 </html>

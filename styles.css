@@ -61,6 +61,12 @@ button {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
+  /* the photo marquee is core content (not a decorative flourish), so keep
+     it moving even under reduced-motion — just slowed way down */
+  .marquee-track {
+    animation-duration: 70s !important;
+    animation-iteration-count: infinite !important;
+  }
 }
 
 /* Subtle film-grain texture over everything, purely decorative */
@@ -86,6 +92,7 @@ button {
    SCENES — full-viewport panels, one visible at a time
    ========================================================================== */
 .scene {
+  min-height: 100vh; /* fallback for browsers w/o svh */
   min-height: 100svh;
   width: 100%;
   display: flex;
@@ -138,6 +145,7 @@ button {
 .lock-card {
   background: rgba(251, 243, 230, 0.06);
   border: 1px solid rgba(217, 165, 92, 0.25);
+  -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   border-radius: 22px;
   padding: 2.6rem 2rem 2.2rem;
@@ -560,6 +568,56 @@ button {
   opacity: 0.55;
 }
 
+/* ---------------- "Our Photo" trigger (bottom of gifts scene) ---------------- */
+.our-photo-trigger-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(3rem, 8vh, 5rem);
+  padding-bottom: 2vh;
+}
+.our-photo-trigger {
+  background: none;
+  border: none;
+  padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  opacity: 0;
+  animation: our-photo-fade-in 0.8s 0.5s var(--ease-soft) forwards;
+  transition: transform 0.25s var(--ease-spring);
+}
+.our-photo-trigger:hover {
+  transform: translateY(-4px) scale(1.03);
+}
+.our-photo-trigger:active {
+  transform: translateY(0) scale(0.97);
+}
+@keyframes our-photo-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.our-photo-bears {
+  width: clamp(84px, 22vw, 128px);
+  height: auto;
+  filter: drop-shadow(0 10px 16px rgba(60, 15, 24, 0.22));
+  animation: lock-float 3.6s ease-in-out infinite;
+}
+.our-photo-label {
+  font-family: var(--font-hand);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--rose-deep);
+  letter-spacing: 0.02em;
+}
+
 /* ==========================================================================
    MODALS
    ========================================================================== */
@@ -579,6 +637,7 @@ button {
   position: absolute;
   inset: 0;
   background: rgba(30, 7, 12, 0.72);
+  -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   animation: fade-in 0.35s var(--ease-soft);
 }
@@ -588,6 +647,7 @@ button {
   border-radius: 18px;
   max-width: 640px;
   width: 100%;
+  max-height: 88vh; /* fallback for browsers w/o svh */
   max-height: 88svh;
   overflow-y: auto;
   padding: 2.4rem 2rem 2rem;
@@ -737,6 +797,7 @@ button {
 .finale-photo-frame img {
   width: 100%;
   display: block;
+  max-height: 74vh; /* fallback for browsers w/o svh */
   max-height: 74svh;
   object-fit: contain;
 }
@@ -791,11 +852,13 @@ button {
   padding: 0;
 }
 #modal-message .modal-backdrop {
+  -webkit-backdrop-filter: none;
   backdrop-filter: none; /* ← baru: matikan blur berat di belakang modal surat */
 }
 #modal-message .modal-card {
   width: 100vw;
   max-width: 100vw;
+  max-height: 100vh; /* fallback for browsers w/o svh */
   max-height: 100svh;
   border-radius: 0;
   padding: 0;
@@ -829,6 +892,151 @@ button {
   color: var(--ink-soft);
   opacity: 0.75;
   margin: 0 0 0.8rem;
+}
+
+/* ==========================================================================
+   SCENE 3 — OUR PHOTO WALL (scrolling polaroid marquee)
+   ========================================================================== */
+.scene-photo-wall {
+  background:
+    radial-gradient(
+      60% 50% at 50% 12%,
+      rgba(217, 165, 92, 0.16),
+      transparent 70%
+    ),
+    radial-gradient(
+      120% 90% at 50% 100%,
+      var(--wine-800) 0%,
+      var(--wine-950) 60%
+    );
+  padding-top: calc(9vh + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(6vh + env(safe-area-inset-bottom, 0px));
+  padding-left: env(safe-area-inset-left, 6vw);
+  padding-right: env(safe-area-inset-right, 6vw);
+  overflow: hidden;
+}
+
+.photo-wall-back {
+  position: absolute;
+  top: calc(1.1rem + env(safe-area-inset-top, 0px));
+  right: calc(1.1rem + env(safe-area-inset-right, 0px));
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(251, 243, 230, 0.12);
+  border: 1px solid rgba(217, 165, 92, 0.35);
+  color: var(--blush-100);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition:
+    transform 0.2s var(--ease-spring),
+    background 0.2s var(--ease-soft);
+  z-index: 3;
+}
+.photo-wall-back:hover {
+  transform: scale(1.08) rotate(90deg);
+  background: rgba(251, 243, 230, 0.2);
+}
+
+.photo-wall-title {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  color: var(--gold);
+  font-size: clamp(2.6rem, 8vw, 4rem);
+  text-shadow: 0 0 24px rgba(217, 165, 92, 0.3);
+  margin: 0 0 clamp(2rem, 6vh, 3.2rem);
+}
+
+.marquee-stack {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.6rem, 2vh, 1.4rem);
+}
+
+/* full-bleed row: breaks out of the scene's horizontal padding */
+.marquee-row {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+}
+
+.marquee-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  will-change: transform;
+  animation: marquee-scroll linear infinite;
+}
+/* paused only via click/tap on a photo (see script.js), never on hover */
+.marquee-row.is-paused .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-25%);
+  }
+}
+
+.marquee-track img {
+  width: clamp(108px, 22vw, 190px);
+  height: clamp(112px, 22.6vw, 195px);
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+  flex: none;
+  margin-left: clamp(-22px, -3vw, -10px);
+  cursor: pointer;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+.marquee-track img:first-child {
+  margin-left: 0;
+}
+
+.photo-wall-caption {
+  margin-top: clamp(2rem, 6vh, 3.2rem);
+  font-family: var(--font-hand);
+  font-size: 1.3rem;
+  color: var(--blush-200);
+  opacity: 0.85;
+}
+
+@media (min-width: 900px) {
+  .marquee-stack {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .marquee-track img {
+    width: clamp(150px, 13vw, 200px);
+    height: clamp(154px, 13.4vw, 205px);
+    margin-left: clamp(-24px, -1.4vw, -14px);
+  }
 }
 
 /* ==========================================================================

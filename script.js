@@ -6,6 +6,18 @@ const CONFIG = {
   sitePassword: "qfimoed", // ganti dengan kata sandi rahasia kalian berdua (tidak case-sensitive)
 };
 
+// Photos used in the "Our Photo" scrolling wall (scene-photo-wall).
+// Add/remove filenames here — everything else (looping, duplication) is automatic.
+const GALLERY_PHOTOS = [
+  "assets/img/gallery/photo-01.png",
+  "assets/img/gallery/photo-02.png",
+  "assets/img/gallery/photo-03.png",
+  "assets/img/gallery/photo-04.png",
+  "assets/img/gallery/photo-05.png",
+  "assets/img/gallery/photo-06.png",
+  "assets/img/gallery/photo-07.png",
+];
+
 // ============================================================================
 // Small helpers
 // ============================================================================
@@ -57,17 +69,93 @@ function startAmbientSparkles() {
 }
 
 // ============================================================================
+// Photo wall — builds the looping "Our Photo" marquee rows
+// ============================================================================
+/**
+ * Rotates an array so a row can show the photos in a different order than
+ * the row above/below it (matches the layered, scattered-polaroid reference).
+ */
+function rotateArray(arr, offset) {
+  const n = arr.length;
+  return arr.map((_, i) => arr[(i + offset) % n]);
+}
+
+/** Small deterministic tilt per photo so the row feels hand-scattered, not robotic. */
+const TILT_DEG = [-4, 2, -2, 3, -3, 1, 4];
+
+function buildMarqueeRow({ order, direction, duration }) {
+  const row = document.createElement("div");
+  row.className = "marquee-row";
+
+  const track = document.createElement("div");
+  track.className = "marquee-track";
+  track.style.animationDuration = `${duration}s`;
+  track.style.animationDirection = direction === "right" ? "reverse" : "normal";
+
+  // Repeat the (re-ordered) list 4x back-to-back. Combined with the
+  // -25% keyframe this guarantees a seamless loop even on very wide
+  // desktop viewports (there's always at least one extra copy waiting
+  // off-screen before the animation resets).
+  const REPEATS = 4;
+  for (let r = 0; r < REPEATS; r++) {
+    order.forEach((src, i) => {
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = "Kenangan bersama";
+      img.loading = "lazy";
+      img.style.transform = `rotate(${TILT_DEG[i % TILT_DEG.length]}deg)`;
+      track.appendChild(img);
+    });
+  }
+
+  row.appendChild(track);
+  return row;
+}
+
+/**
+ * Pause a row's scroll only when one of its photos is clicked/tapped
+ * (never on hover/mouseover). Clicking the same photo again — or any other
+ * photo in a different row — resumes that row. Delegated on the stack so it
+ * keeps working for photos that get rebuilt or added later.
+ */
+function bindMarqueeClickToPause(stack) {
+  stack.addEventListener("click", (e) => {
+    const img = e.target.closest(".marquee-track img");
+    if (!img) return;
+    const row = img.closest(".marquee-row");
+    if (!row) return;
+    row.classList.toggle("is-paused");
+  });
+}
+
+function buildPhotoWall() {
+  const stack = $("#marquee-stack");
+  if (!stack || stack.childElementCount > 0) return; // build once
+
+  const rows = [
+    { order: GALLERY_PHOTOS, direction: "left", duration: 34 },
+    { order: rotateArray(GALLERY_PHOTOS, 3), direction: "right", duration: 30 },
+    { order: rotateArray(GALLERY_PHOTOS, 5), direction: "left", duration: 38 },
+  ];
+
+  rows.forEach((config) => stack.appendChild(buildMarqueeRow(config)));
+  bindMarqueeClickToPause(stack);
+}
+
+// ============================================================================
 // Scene manager — swaps the full-viewport panels
 // ============================================================================
 class SceneManager {
   constructor() {
     this.cover = $("#scene-cover");
     this.gifts = $("#scene-gifts");
+    this.photoWall = $("#scene-photo-wall");
   }
 
   showGifts() {
     this.cover.hidden = true;
     this.gifts.hidden = false;
+    this.photoWall.hidden = true;
     window.scrollTo({ top: 0 });
     // stagger the three gift-cards in: left, center(flower), right
     // (the "flower" is the visual center even though it's the 2nd DOM item)
@@ -77,6 +165,13 @@ class SceneManager {
         setTimeout(() => card.classList.add("in-view"), i * 220);
       });
     });
+  }
+
+  showPhotoWall() {
+    buildPhotoWall();
+    this.gifts.hidden = true;
+    this.photoWall.hidden = false;
+    window.scrollTo({ top: 0 });
   }
 }
 
@@ -214,6 +309,14 @@ function init() {
 
   $$(".gift-card").forEach((card) => {
     card.addEventListener("click", () => modals.open(card.dataset.gift));
+  });
+
+  $("#our-photo-trigger").addEventListener("click", () => {
+    scenes.showPhotoWall();
+  });
+
+  $("#photo-wall-back").addEventListener("click", () => {
+    scenes.showGifts();
   });
 
   startAmbientSparkles();
