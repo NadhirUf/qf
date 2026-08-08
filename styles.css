@@ -786,6 +786,36 @@ button {
     transform: translateY(100vh) rotate(160deg);
   }
 }
+/* --- Modal pesan: full screen, dibaca dengan scroll --- */
+#modal-message.modal {
+  padding: 0;
+}
+#modal-message .modal-card {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100svh;
+  max-height: none;
+  border-radius: 0;
+  padding: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#modal-message .modal-kicker {
+  padding: 1.6rem 1rem 0.8rem;
+  margin: 0;
+}
+#modal-message .letter-frame {
+  border-radius: 0;
+  box-shadow: none;
+}
+#modal-message .letter-frame img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+#modal-message .modal-close {
+  position: fixed; /* biar tombol X tetap kelihatan walau discroll */
+}
 
 /* ==========================================================================
    RESPONSIVE TWEAKS
