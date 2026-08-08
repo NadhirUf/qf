@@ -793,7 +793,7 @@ button {
 #modal-message .modal-card {
   width: 100vw;
   max-width: 100vw;
-  height: 100svh;
+  min-height: 100svh;
   max-height: none;
   border-radius: 0;
   padding: 0;
@@ -813,11 +813,9 @@ button {
   width: 100%;
   height: auto;
   display: block;
-  transform: scale(1.25);
-  transform-origin: top center;
 }
 #modal-message .modal-close {
-  position: fixed; /* biar tombol X tetap kelihatan walau discroll */
+  position: fixed;
 }
 
 /* ==========================================================================
