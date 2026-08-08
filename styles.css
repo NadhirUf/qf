@@ -674,7 +674,7 @@ button {
   opacity: 0;
 }
 .bouquet-left {
-  width: 78%;
+  width: 70%;
   align-self: flex-end;
   transform: translateX(-40px);
   animation: fan-left 0.7s 0.1s var(--ease-spring) forwards;
