@@ -798,7 +798,7 @@ button {
   padding: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-y;
+  touch-action: pan-y pinch-zoom;
   overscroll-behavior: contain;
 }
 #modal-message .modal-kicker {
@@ -817,6 +817,14 @@ button {
 }
 #modal-message .modal-close {
   position: fixed;
+}
+#modal-message .modal-zoom-hint {
+  text-align: center;
+  font-family: var(--font-hand);
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+  opacity: 0.75;
+  margin: 0 0 0.8rem;
 }
 
 /* ==========================================================================
