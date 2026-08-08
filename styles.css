@@ -663,8 +663,8 @@ button {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: clamp(1rem, 4vw, 2.5rem);
-  min-height: clamp(240px, 42vw, 360px);
+  gap: clamp(0.5rem, 3vw, 2.5rem);
+  min-height: clamp(260px, 48vw, 380px);
   margin-bottom: 1rem;
 }
 .bouquet-item {
