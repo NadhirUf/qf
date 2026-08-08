@@ -807,14 +807,17 @@ button {
 #modal-message .letter-frame {
   border-radius: 0;
   box-shadow: none;
+  overflow: hidden;
 }
 #modal-message .letter-frame img {
   width: 100%;
   height: auto;
   display: block;
+  transform: scale(1.25);
+  transform-origin: top center;
 }
 #modal-message .modal-close {
-  position: fixed; /* biar tombol X tetap kelihatan walau discroll */
+  position: hidden; /* biar tombol X tetap kelihatan walau discroll */
 }
 
 /* ==========================================================================
