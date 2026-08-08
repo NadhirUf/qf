@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<title>Happy Birthday, Sayang 🤍</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Caveat:wght@500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Ambient layers: grain + floating candle-light glow, sit behind everything -->
+  <div class="ambient-grain" aria-hidden="true"></div>
+  <div id="particle-layer" class="particle-layer" aria-hidden="true"></div>
+
+  <!-- ============ SCENE 0 — PASSWORD LOCK ============ -->
+  <section id="scene-lock" class="scene scene-lock" aria-label="Masukkan kata sandi">
+    <div class="lock-card">
+      <div class="lock-icon-wrap">
+        <svg class="lock-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="14" y="28" width="36" height="28" rx="6" fill="var(--gold)"/>
+          <path class="lock-shackle" d="M20 28V20a12 12 0 0 1 24 0v8" stroke="var(--gold)" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="32" cy="40" r="4" fill="var(--wine-950)"/>
+          <rect x="30" y="42" width="4" height="8" rx="2" fill="var(--wine-950)"/>
+        </svg>
+      </div>
+      <p class="lock-eyebrow">— rahasia kecil untuk kamu —</p>
+      <h2 class="lock-title">Masukkan kata sandi</h2>
+      <p class="lock-hint">psst, kamu pasti tau jawabannya 🤍</p>
+
+      <form id="lock-form" class="lock-form" autocomplete="off">
+        <input
+          id="lock-input"
+          class="lock-input"
+          type="password"
+          inputmode="text"
+          placeholder="Ketik kata sandi..."
+          aria-label="Kata sandi"
+        />
+        <button type="submit" class="lock-submit">Buka</button>
+      </form>
+      <p id="lock-error" class="lock-error" hidden>Belum tepat, coba lagi ya 🥺</p>
+    </div>
+  </section>
+
+  <!-- ============ SCENE 1 — COVER ============ -->
+  <section id="scene-cover" class="scene scene-cover" aria-label="Sampul" hidden>
+    <div class="cover-vignette" aria-hidden="true"></div>
+
+    <p class="eyebrow">— sebuah kejutan kecil untuk —</p>
+    <h1 class="cover-title">
+      <span class="title-line">Happy Birthday,</span>
+      <span class="title-name" id="girlfriend-name">Sayang</span>
+    </h1>
+
+    <button id="cake-trigger" class="cake-trigger" aria-label="Klik kue untuk membuka kejutan">
+      <span class="cake-glow" aria-hidden="true"></span>
+      <img src="assets/img/cake-candles.png" alt="Kue ulang tahun dengan lilin" class="cake-img" />
+    </button>
+
+    <p class="cover-hint"><span class="hint-tap">👆</span> ketuk kuenya untuk lihat kejutan</p>
+  </section>
+
+  <!-- ============ SCENE 2 — THREE GIFTS ============ -->
+  <section id="scene-gifts" class="scene scene-gifts" aria-label="Tiga kejutan" hidden>
+    <p class="eyebrow eyebrow-dark">— pilih satu per satu, ya —</p>
+    <h2 class="gifts-title">Ada tiga kejutan untukmu</h2>
+
+    <div class="gifts-row">
+
+      <button class="gift-card gift-envelope" data-gift="message" aria-label="Buka pesan">
+        <span class="washi washi-a" aria-hidden="true"></span>
+        <img src="assets/img/envelope.png" alt="Amplop pesan" />
+        <span class="gift-label">Pesan untukmu</span>
+      </button>
+
+      <button class="gift-card gift-flower" data-gift="flower" aria-label="Lihat bunga">
+        <span class="washi washi-b" aria-hidden="true"></span>
+        <img src="assets/img/bouquet-center.png" alt="Buket bunga" />
+        <span class="gift-label">Bunga untukmu</span>
+      </button>
+
+      <button class="gift-card gift-cake" data-gift="cake" aria-label="Buka kue">
+        <span class="washi washi-c" aria-hidden="true"></span>
+        <img src="assets/img/cake-ribbon.png" alt="Kue ulang tahun" />
+        <span class="gift-label">Kue untukmu</span>
+      </button>
+
+    </div>
+  </section>
+
+  <!-- ============ MODAL — MESSAGE ============ -->
+  <div id="modal-message" class="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card modal-message-card">
+      <button class="modal-close" data-close aria-label="Tutup">✕</button>
+      <p class="modal-kicker">sepucuk surat kecil</p>
+      <div class="letter-frame">
+        <img src="assets/img/message-letter.jpg" alt="Surat untukmu" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL — FLOWER ============ -->
+  <div id="modal-flower" class="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card modal-flower-card">
+      <button class="modal-close" data-close aria-label="Tutup">✕</button>
+      <p class="modal-kicker">sekumpulan bunga untukmu</p>
+      <div class="bouquet-fan">
+        <img class="bouquet-item bouquet-left"   src="assets/img/bouquet-left.png"  alt="Buket dengan tiga foto kenangan" />
+        <img class="bouquet-item bouquet-center" src="assets/img/bouquet-center.png" alt="Buket tulip" />
+        <img class="bouquet-item bouquet-right"  src="assets/img/bouquet-right.jpg" alt="Buket khusus untukmu" />
+      </div>
+      <p class="modal-caption">semoga harimu semerbak kaya bunga-bunga ini 🌷</p>
+    </div>
+  </div>
+
+  <!-- ============ MODAL — CAKE / FINALE ============ -->
+  <div id="modal-cake" class="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card modal-cake-card">
+      <button class="modal-close" data-close aria-label="Tutup">✕</button>
+      <p class="modal-kicker">untuk kamu, hari ini &amp; selamanya</p>
+      <div class="finale-photo-frame">
+        <img src="assets/img/finale-photo.jpg" alt="Kenangan dan pesan untukmu" />
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
