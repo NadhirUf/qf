@@ -16,6 +16,9 @@ const GALLERY_PHOTOS = [
   "assets/img/gallery/photo-05.png",
   "assets/img/gallery/photo-06.png",
   "assets/img/gallery/photo-07.png",
+  "assets/img/gallery/1gatsu.png",
+  "assets/img/gallery/2gatsu.png",
+  "assets/img/gallery/3gatsu.png",
 ];
 
 // ============================================================================
