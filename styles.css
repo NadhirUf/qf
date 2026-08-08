@@ -790,6 +790,9 @@ button {
 #modal-message.modal {
   padding: 0;
 }
+#modal-message .modal-backdrop {
+  backdrop-filter: none; /* ← baru: matikan blur berat di belakang modal surat */
+}
 #modal-message .modal-card {
   width: 100vw;
   max-width: 100vw;
@@ -814,6 +817,7 @@ button {
   width: 100%;
   height: auto;
   display: block;
+  will-change: transform;
 }
 #modal-message .modal-close {
   position: fixed;

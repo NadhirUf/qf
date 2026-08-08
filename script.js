@@ -109,6 +109,7 @@ class ModalManager {
     this.activeKey = key;
     modal.hidden = false;
     document.body.style.overflow = "hidden";
+    document.getElementById("particle-layer").style.display = "none";
 
     // Replay entrance animations every time it's opened
     this._replayAnimations(modal);
@@ -123,6 +124,7 @@ class ModalManager {
     const modal = this.modals[this.activeKey];
     modal.hidden = true;
     document.body.style.overflow = "";
+    document.getElementById("particle-layer").style.display = "";
     this.activeKey = null;
   }
 
